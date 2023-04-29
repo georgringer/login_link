@@ -1,0 +1,32 @@
+{
+	"name": "georgringer/login-link",
+	"type": "typo3-cms-extension",
+	"description": "Link by token",
+	"keywords": [
+		"TYPO3",
+		"extension"
+	],
+	"authors": [
+		{
+			"name": "Georg Ringer",
+			"email": "mail@ringer.it",
+			"role": "Developer"
+		}
+	],
+	"license": [
+		"GPL-2.0-or-later"
+	],
+	"require": {
+		"typo3/cms-core": "^12 || ^11"
+	},
+	"autoload": {
+		"psr-4": {
+			"GeorgRinger\\LoginLink\\": "Classes/"
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "login_link"
+		}
+	}
+}
