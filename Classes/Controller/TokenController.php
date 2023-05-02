@@ -47,10 +47,17 @@ class TokenController
         );
         $url = $this->getUrl($recordId, $token, $authType);
 
-        $content = '<div><h3>Login link</h3>
-<p>This login link is only valid <strong>once</strong></p>
+        $content = '<div><h3>Login link</h3>';
+
+        if ($authType === 'fe' && !$url) {
+            $content .= 'error: no configuration found';
+        } else {
+            $content .= '<p>This login link is only valid <strong>once</strong>! Use URL in a different browser.</p>
 <textarea readonly class="form-control">' . htmlspecialchars($url) . '</textarea>
 </div>';
+        }
+
+
         return new HtmlResponse($content);
     }
 
@@ -66,7 +73,6 @@ class TokenController
 
             $targetPage = (int)($tsconfig['tx_loginlink.']['fe.']['loginPage'] ?? 0);
             if (!$targetPage) {
-                $this->sendMessage('No target page', ContextualFeedbackSeverity::ERROR);
                 return null;
             }
             $url = PreviewUriBuilder::create($targetPage)

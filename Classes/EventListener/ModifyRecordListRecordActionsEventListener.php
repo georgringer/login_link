@@ -3,10 +3,10 @@
 namespace GeorgRinger\LoginLink\EventListener;
 
 use GeorgRinger\LoginLink\Service\Validation;
-use TYPO3\CMS\Backend\RecordList\Event\ModifyRecordListRecordActionsEvent;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent;
 
 class ModifyRecordListRecordActionsEventListener
 {

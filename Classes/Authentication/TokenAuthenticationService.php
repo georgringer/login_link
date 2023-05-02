@@ -7,6 +7,8 @@ use GeorgRinger\LoginLink\Repository\TokenRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\AbstractAuthenticationService;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class TokenAuthenticationService extends AbstractAuthenticationService
 {
@@ -47,8 +49,12 @@ class TokenAuthenticationService extends AbstractAuthenticationService
 
     protected function getTokenFromRequest(): ?string
     {
-        /** @var ServerRequest $request */
-        $request = $this->authInfo['request'] ?? $GLOBALS['TYPO3_REQUEST'];
-        return $request->getQueryParams()['byToken'] ?? null;
+        if ((new Typo3Version())->getMajorVersion() >= 12) {
+            /** @var ServerRequest $request */
+            $request = $this->authInfo['request'] ?? $GLOBALS['TYPO3_REQUEST'];
+            return $request->getQueryParams()['byToken'] ?? null;
+        }
+        $getParams = trim((string)(GeneralUtility::_GET('byToken')));
+        return $getParams ?? null;
     }
 }

@@ -22,6 +22,6 @@ services:
   GeorgRinger\LoginLink\EventListener\ModifyRecordListRecordActionsEventListener:
     tags:
       - name: event.listener
-        identifier: 'ext-loginlink/modify-hreflang'
-        event: TYPO3\CMS\Backend\RecordList\Event\ModifyRecordListRecordActionsEvent
+        identifier: 'ext-loginlink/modify-recordlist'
+        event: TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent
         method: 'modifyRecordActions'
