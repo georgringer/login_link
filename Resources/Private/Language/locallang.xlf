@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" product-name="login_link">
+        <header/>
+        <body>
+            <trans-unit id="trigger.title" xml:space="preserve">
+				<source>Generate login link</source>
+			</trans-unit>
+			<trans-unit id="modal.description" xml:space="preserve">
+				<source>This login link is only valid once! Copy the URL into a different browser (or incognito tab).</source>
+			</trans-unit>
+			<trans-unit id="modal.fe.error" xml:space="preserve">
+				<source>ERROR: Missing PageTsconfig configuration "tx_loginlink.fe.loginPage"!</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

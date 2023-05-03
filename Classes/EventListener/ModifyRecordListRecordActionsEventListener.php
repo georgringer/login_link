@@ -6,6 +6,7 @@ use GeorgRinger\LoginLink\Service\Validation;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent;
 
 class ModifyRecordListRecordActionsEventListener
@@ -28,6 +29,7 @@ class ModifyRecordListRecordActionsEventListener
 
     public function modifyRecordActions(ModifyRecordListRecordActionsEvent $event): void
     {
+        $lang = $this->getLanguageService();
         $table = $event->getTable();
         $recordId = $event->getRecord()['uid'];
         if ($this->validation->isValid($table, $recordId)) {
@@ -36,8 +38,10 @@ class ModifyRecordListRecordActionsEventListener
                 'id' => $recordId,
             ]);
             $icon = $this->iconFactory->getIcon('txloginlink-loginlink', Icon::SIZE_SMALL);
+            $title = $lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:trigger.title');
             $html = '<button class="btn btn-default t3js-modal-trigger"
-        data-title="Login link"
+        data-title="' . htmlspecialchars($title) . '"
+        title="' . htmlspecialchars($title) . '"
         data-bs-content=""
         data-url="' . htmlspecialchars($url) . '"
         >
@@ -50,5 +54,10 @@ class ModifyRecordListRecordActionsEventListener
                 'delete'
             );
         }
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 }

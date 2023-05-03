@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace GeorgRinger\LoginLink\Controller;
 
 use GeorgRinger\LoginLink\Repository\TokenRepository;
@@ -12,6 +13,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 
 class TokenController
@@ -32,6 +34,7 @@ class TokenController
     {
         $recordId = (int)($request->getQueryParams()['id'] ?? 0);
         $table = $request->getQueryParams()['table'] ?? '';
+        $lang = $this->getLanguageService();
 
         if (!$this->validation->isValid($table, $recordId)) {
             return new HtmlResponse('Not valid');
@@ -47,16 +50,13 @@ class TokenController
         );
         $url = $this->getUrl($recordId, $token, $authType);
 
-        $content = '<div><h3>Login link</h3>';
-
         if ($authType === 'fe' && !$url) {
-            $content .= 'error: no configuration found';
+            $content = htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:modal.fe.error'));
         } else {
-            $content .= '<p>This login link is only valid <strong>once</strong>! Use URL in a different browser.</p>
+            $content = '<p>' . htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:modal.description')) . '</p>
 <textarea readonly class="form-control">' . htmlspecialchars($url) . '</textarea>
 </div>';
         }
-
 
         return new HtmlResponse($content);
     }
@@ -85,6 +85,11 @@ class TokenController
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
+    }
+
+    protected function getLanguageService(): LanguageService
+    {
+        return $GLOBALS['LANG'];
     }
 
 }
