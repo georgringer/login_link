@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace GeorgRinger\LoginLink\EventListener;
 
 use GeorgRinger\LoginLink\Service\Validation;
+use TYPO3\CMS\Backend\RecordList\Event\ModifyRecordListRecordActionsEvent as ModifyRecordListRecordActionsEventV12;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -29,24 +31,10 @@ class ModifyRecordListRecordActionsEventListener
 
     public function modifyRecordActions(ModifyRecordListRecordActionsEvent $event): void
     {
-        $lang = $this->getLanguageService();
         $table = $event->getTable();
         $recordId = $event->getRecord()['uid'];
         if ($this->validation->isValid($table, $recordId)) {
-            $url = $this->uriBuilder->buildUriFromRoute('loginlink_token', [
-                'table' => $table,
-                'id' => $recordId,
-            ]);
-            $icon = $this->iconFactory->getIcon('txloginlink-loginlink', Icon::SIZE_SMALL);
-            $title = $lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:trigger.title');
-            $html = '<button class="btn btn-default t3js-modal-trigger"
-        data-title="' . htmlspecialchars($title) . '"
-        title="' . htmlspecialchars($title) . '"
-        data-bs-content=""
-        data-url="' . htmlspecialchars($url) . '"
-        >
-            ' . $icon->render() . '
-    </button>';
+            $html = $this->getHtml($table, $recordId);
             $event->setAction(
                 $html,
                 'loginlink',
@@ -54,6 +42,41 @@ class ModifyRecordListRecordActionsEventListener
                 'delete'
             );
         }
+    }
+
+    public function modifyRecordActionsV12(ModifyRecordListRecordActionsEventV12 $event): void
+    {
+        $table = $event->getTable();
+        $recordId = $event->getRecord()['uid'];
+        if ($this->validation->isValid($table, $recordId)) {
+            $html = $this->getHtml($table, $recordId);
+            $event->setAction(
+                $html,
+                'loginlink',
+                'primary',
+                'delete'
+            );
+        }
+    }
+
+    protected function getHtml(string $table, int $recordId): string
+    {
+        $lang = $this->getLanguageService();
+        $url = $this->uriBuilder->buildUriFromRoute('loginlink_token', [
+            'table' => $table,
+            'id' => $recordId,
+        ]);
+        $icon = $this->iconFactory->getIcon('txloginlink-loginlink', Icon::SIZE_SMALL);
+        $title = $lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:trigger.title');
+        $html = '<button class="btn btn-default t3js-modal-trigger"
+        data-title="' . htmlspecialchars($title) . '"
+        title="' . htmlspecialchars($title) . '"
+        data-bs-content=""
+        data-url="' . htmlspecialchars($url) . '"
+        >
+            ' . $icon->render() . '
+    </button>';
+        return $html;
     }
 
     protected function getLanguageService(): LanguageService
