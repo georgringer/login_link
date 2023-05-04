@@ -62,7 +62,7 @@ class ModifyRecordListRecordActionsEventListener
     protected function getHtml(string $table, int $recordId): string
     {
         $lang = $this->getLanguageService();
-        $url = $this->uriBuilder->buildUriFromRoute('loginlink_token', [
+        $url = (string)$this->uriBuilder->buildUriFromRoute('loginlink_token', [
             'table' => $table,
             'id' => $recordId,
         ]);
