@@ -18,6 +18,8 @@ The login link can only be generated for non admin users
 
 !! Currently nothing is logged when a user logs in via a login link !!
 
+Disable feature by setting `LOGINLINK_DISABLE_BE=1` in your .env file.
+
 ### Login links for FE users
 
 Set the following Page TsConfig to enable the login link for FE users:
@@ -26,3 +28,5 @@ Set the following Page TsConfig to enable the login link for FE users:
 # 123 is the page which is used to login users, e.g. the login page
 tx_loginlink.fe.loginPage = 123
 ```
+
+Disable feature by setting `LOGINLINK_DISABLE_FE=1` in your .env file.
