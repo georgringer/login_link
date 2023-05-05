@@ -6,6 +6,7 @@ namespace GeorgRinger\LoginLink\Authentication;
 use GeorgRinger\LoginLink\Repository\TokenRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\AbstractAuthenticationService;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,9 +28,9 @@ class TokenAuthenticationService extends AbstractAuthenticationService
             return false;
         }
         $this->tokenRepository->removeOutdated();
-        $userId = $this->tokenRepository->getUserId($token, strtolower($this->authInfo['loginType']));
-        if ($userId) {
-            return BackendUtility::getRecord($this->authInfo['db_user']['table'], $userId);
+        $tokenRow = $this->tokenRepository->getTokenRow($token, strtolower($this->authInfo['loginType']));
+        if ($tokenRow) {
+            return BackendUtility::getRecord($this->authInfo['db_user']['table'], $tokenRow['user_uid']);
         }
 
         return false;
@@ -39,8 +40,12 @@ class TokenAuthenticationService extends AbstractAuthenticationService
     {
         $token = $this->getTokenFromRequest();
         if ($token) {
-            $userId = $this->tokenRepository->getUserId($token, strtolower($this->authInfo['loginType']), true);
-            if ($userId === $user['uid']) {
+            $loginType = strtolower($this->authInfo['loginType']);
+            $tokenRow = $this->tokenRepository->getTokenRow($token, $loginType, true);
+            if ($tokenRow && $tokenRow['user_uid'] === $user['uid']) {
+                if ($loginType === 'be') {
+                  $this->setSwitchbackInformation();
+                }
                 return 200;
             }
         }

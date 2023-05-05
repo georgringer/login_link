@@ -46,7 +46,8 @@ class TokenController
         $this->tokenRepository->add(
             $recordId,
             $authType,
-            $token
+            $token,
+            $this->getBackendUser()->user['uid']
         );
         $url = $this->getUrl($recordId, $token, $authType);
 

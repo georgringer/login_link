@@ -13,7 +13,7 @@ class TokenRepository
     private const TABLE = 'tx_loginlink_token';
     private const TOKEN_VALIDITY = 60 * 5;
 
-    public function getUserId(string $token, string $authType, bool $clearToken = false): ?int
+    public function getTokenRow(string $token, string $authType, bool $clearToken = false): ?array
     {
         $queryBuilder = $this->getConnection()->createQueryBuilder();
         $row = $queryBuilder
@@ -31,7 +31,7 @@ class TokenRepository
             if ($clearToken) {
                 $this->removeByUserId($userId, $authType);
             }
-            return $userId;
+            return $row;
         }
         return null;
     }
@@ -63,7 +63,7 @@ class TokenRepository
         $this->getConnection()->truncate(self::TABLE);
     }
 
-    public function add(int $userId, string $authType, string $token): void
+    public function add(int $userId, string $authType, string $token, int $invokedBy): void
     {
         $this->removeByUserId($userId, $authType);;
         $this->getConnection()->insert(
@@ -73,6 +73,7 @@ class TokenRepository
                 'auth_type' => $authType,
                 'token' => $token,
                 'valid_until' => time() + self::TOKEN_VALIDITY,
+                'invoked_by' => $invokedBy,
             ]
         );
     }
