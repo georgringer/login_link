@@ -61,7 +61,7 @@ class TokenController
         return new HtmlResponse($content);
     }
 
-    private function getUrl(int $id, string $token, string $authType): ?string
+    private function getUrl(int $id, string $token, string $authType): string
     {
         if ($authType === 'be') {
             /** @var ServerRequest $request */
@@ -73,13 +73,13 @@ class TokenController
 
             $targetPage = (int)($tsconfig['tx_loginlink.']['fe.']['loginPage'] ?? 0);
             if (!$targetPage) {
-                return null;
+                return '';
             }
             $url = PreviewUriBuilder::create($targetPage)
                     ->buildUri() . '?byToken=' . $token;
         }
 
-        return $url;
+        return (string)$url;
     }
 
     protected function getBackendUser(): BackendUserAuthentication
