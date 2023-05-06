@@ -22,6 +22,7 @@ class TokenController
     protected TokenGenerator $tokenGenerator;
     protected TokenRepository $tokenRepository;
     protected Validation $validation;
+    protected const PAID_VERSION = true;
 
     public function __construct(TokenGenerator $tokenGenerator, TokenRepository $tokenRepository, Validation $validation)
     {
@@ -40,21 +41,29 @@ class TokenController
             return new HtmlResponse('Not valid');
         }
 
-        $token = $this->tokenGenerator->generate();
         $authType = $table === 'fe_users' ? 'fe' : 'be';
 
-        $this->tokenRepository->add(
-            $recordId,
-            $authType,
-            $token,
-            $this->getBackendUser()->user['uid']
-        );
+        $content = '';
+        if (!self::PAID_VERSION) {
+            $token = 'dummy123';
+            $content .= '<div class="alert alert-info">'
+                . htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:demo.information')) . '</div>';
+        } else {
+            $token = $this->tokenGenerator->generate();
+            $this->tokenRepository->add(
+                $recordId,
+                $authType,
+                $token,
+                $this->getBackendUser()->user['uid']
+            );
+        }
+
         $url = $this->getUrl($recordId, $token, $authType);
 
         if ($authType === 'fe' && !$url) {
-            $content = htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:modal.fe.error'));
+            $content .= htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:modal.fe.error'));
         } else {
-            $content = '<p>' . htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:modal.description')) . '</p>
+            $content .= '<p>' . htmlspecialchars($lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:modal.description')) . '</p>
 <textarea readonly class="form-control">' . htmlspecialchars($url) . '</textarea>
 </div>';
         }

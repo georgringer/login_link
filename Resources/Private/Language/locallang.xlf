@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" product-name="login_link">
-        <header/>
-        <body>
-            <trans-unit id="trigger.title" xml:space="preserve">
+	<file source-language="en" datatype="plaintext" original="messages" product-name="login_link">
+		<header/>
+		<body>
+			<trans-unit id="trigger.title" xml:space="preserve">
 				<source>Generate login link</source>
 			</trans-unit>
 			<trans-unit id="modal.description" xml:space="preserve">
@@ -12,6 +12,9 @@
 			<trans-unit id="modal.fe.error" xml:space="preserve">
 				<source>ERROR: Missing PageTsconfig configuration "tx_loginlink.fe.loginPage"!</source>
 			</trans-unit>
-        </body>
-    </file>
+			<trans-unit id="demo.information" xml:space="preserve">
+				<source>Important: This is just a demo version of the extension "login_link". Check out the Readme file for information about the premium extension.</source>
+			</trans-unit>
+		</body>
+	</file>
 </xliff>
