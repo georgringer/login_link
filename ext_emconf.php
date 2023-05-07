@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Login link',
-    'description' => '',
+    'description' => 'Fast way to login as different backend or frontenduser by generating a link including a one-time token within the backend.',
     'category' => '',
     'author' => 'Georg Ringer',
     'state' => 'beta',

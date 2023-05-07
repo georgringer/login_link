@@ -1,10 +1,12 @@
 {
 	"name": "georgringer/login-link",
 	"type": "typo3-cms-extension",
-	"description": "Link by token",
+	"description": "Fast way to login as different backend or frontenduser by generating a link including a one-time token within the backend.",
 	"keywords": [
 		"TYPO3",
-		"extension"
+		"extension",
+		"login",
+		"token"
 	],
 	"authors": [
 		{
