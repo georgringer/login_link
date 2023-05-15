@@ -8,16 +8,6 @@ After clicking the additional icon with the lock, a modal opens with the login l
 ![Backend users](Resources/Public/Screenshots/be_users.png)
 ![Frontend users](Resources/Public/Screenshots/fe_users.png)
 
-## Pricing
-
-- € 100.00 (ex. VAT) for 1 site
-- € 300.00 (ex. VAT) for unlimited sites related to the agency itself or its customers
-
-Included: Bugfix & feature releases
-
-Contact: Please write an email to extension@ringer.it with the version you need and your invoice address + VAT ID.
-
-
 ## Installation
 
 Install this extension via composer by using the following command:
