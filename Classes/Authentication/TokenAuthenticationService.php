@@ -44,7 +44,7 @@ class TokenAuthenticationService extends AbstractAuthenticationService
             $tokenRow = $this->tokenRepository->getTokenRow($token, $loginType, true);
             if ($tokenRow && $tokenRow['user_uid'] === $user['uid']) {
                 if ($loginType === 'be') {
-                  $this->setSwitchbackInformation();
+                  #$this->setSwitchbackInformation();
                 }
                 return 200;
             }
