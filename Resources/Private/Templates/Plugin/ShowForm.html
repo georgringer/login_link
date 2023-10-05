@@ -1,0 +1,21 @@
+<h1>
+    <f:translate key="LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:plugin.header" />
+</h1>
+<f:if condition="{errorMessage}">
+    <p style="color: red;">{errorMessage}</p>
+</f:if>
+<f:security.ifAuthenticated>
+    <p style="color: red;">
+        <f:translate key="LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:plugin.user_logged_in" arguments="{0: usernameAndEmail}" />
+        <f:link.typolink parameter="?logintype=logout">(logout)</f:link.typolink>
+    </p>
+</f:security.ifAuthenticated>
+<f:form action="sendMail">
+    <div>
+        <label for="login_link_email">
+            <f:translate key="LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:plugin.field_email_label" default="E-mail" />
+        </label>
+        <f:form.textfield id="login_link_email" name="email" value="{email}" />
+    </div>
+    <f:form.submit class="btn btn-primary" value="{f:translate(key: 'LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:plugin.form_submit_label', default: 'Send')}" />
+</f:form>
