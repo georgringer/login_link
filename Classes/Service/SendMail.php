@@ -56,8 +56,9 @@ class SendMail
 
         $email = GeneralUtility::makeInstance(FluidEmail::class);
         $email->setRequest($GLOBALS['TYPO3_REQUEST']);
-        $mailFromAddress = $this->loginlinkExtensionConfiguration['pluginMailFromAddress'] ?? ($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] ?? null);
-        $mailFromName = $this->loginlinkExtensionConfiguration['pluginMailFromAddress'] ?? ($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName'] ?? '');
+        $mailFromAddress = $this->loginlinkExtensionConfiguration['pluginMailFromAddress'] ?: ($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] ?? null);
+        $mailFromName = $this->loginlinkExtensionConfiguration['pluginMailFromAddress'] ?:
+            ($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName'] ?? '');
         if(!$mailFromAddress) {
             throw new Exception('The pluginMailFromAddress extension configuration or $GLOBALS[\'TYPO3_CONF_VARS\'][\'MAIL\'][\'defaultMailFromAddress\'] needs to be configured to be able to send an e-email.');
         }
