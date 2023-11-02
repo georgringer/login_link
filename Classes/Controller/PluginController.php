@@ -56,15 +56,16 @@ class PluginController extends ActionController
      */
     public function showFormAction(): ResponseInterface
     {
-        $email = $this->request->getArguments()['email'] ?? ($this->configurationManager->getContentObject()->data['email'] ?? false);
+        $email = $this->getEmailAddress();
         try {
-            if ($this->getUserIdFromEmail($email)) {
-                return new ForwardResponse('showFormPredefinedEmail');
+            if ($email && $this->getUserIdFromEmail($email)) {
+                $response = new ForwardResponse('showFormPredefinedEmail');
+                return $response->withArguments(['email' => $email]);
             }
         } catch (\Doctrine\DBAL\Driver\Exception $e) {
         } catch (UserValidationException $e) {
             $this->view->assignMultiple([
-                'errorMessage' => $this->request->getArguments()['errorMessage'] ?? null,
+                'errorMessage' => $this->request->getArguments()['errorMessage'] ?? $e->getMessage(),
                 'email' => $email,
                 'emailFromCObjectData' => $this->configurationManager->getContentObject()->data['email'] ?? null
             ]);
@@ -80,6 +81,28 @@ class PluginController extends ActionController
     }
 
     /**
+     * @return string|null
+     */
+    private function getEmailAddress($email = null): ?string
+    {
+        if ($email === null) {
+            $email = $this->request->getArguments()['email'] ?? null;
+        }
+
+        if ($email === null) {
+            $email = $this->configurationManager->getContentObject()->data['email'] ?? null;
+        }
+
+        if ($email === null) {
+            if($postVar = $this->configurationManager->getContentObject()->data['postVar'] ?? null) {
+                $email = ArrayUtility::getValueByPath($GLOBALS['_POST'], $postVar, '.') ?? null;
+            }
+        }
+
+        return $email;
+    }
+
+    /**
      * @param string $email
      * @return void
      */
@@ -87,7 +110,7 @@ class PluginController extends ActionController
     {
         $this->view->assignMultiple([
             'errorMessage' => $this->request->getArguments()['errorMessage'] ?? null,
-            'email' => $this->configurationManager->getContentObject()->data['email'] ?? $email
+            'email' => $this->getEmailAddress($email)
         ]);
         if($userObject = $GLOBALS['TSFE']->fe_user->user ?? false) {
             $this->view->assignMultiple([
