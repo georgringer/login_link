@@ -1,0 +1,4 @@
+# cat=basic//1; type=string; label=Mail From Address for sending mail: if not supplied, the config [MAIL][defaultMailFromAddress] is used
+pluginMailFromAddress =
+# cat=basic//2; type=string; label=Mail From Name for sending mail: if not supplied, the config [MAIL][defaultMailFromName] is used
+pluginMailFromName =

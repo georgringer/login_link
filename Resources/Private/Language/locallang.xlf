@@ -15,6 +15,51 @@
 			<trans-unit id="demo.information" xml:space="preserve">
 				<source>Important: This is just a demo version of the extension "login_link". Check out the Readme file for information about the premium extension.</source>
 			</trans-unit>
+			<trans-unit id="plugin.header" xml:space="preserve">
+				<source>Request a login link for your user account</source>
+			</trans-unit>
+			<trans-unit id="plugin.field_email_label" xml:space="preserve">
+				<source>E-mail address</source>
+			</trans-unit>
+			<trans-unit id="plugin.form_submit_label" xml:space="preserve">
+				<source>Send</source>
+			</trans-unit>
+			<trans-unit id="plugin.form_submit_predefined_label" xml:space="preserve">
+				<source>Send to %s</source>
+			</trans-unit>
+			<trans-unit id="plugin.validation_email_syntax_error" xml:space="preserve">
+				<source>The syntax of the e-mail address is not valid!</source>
+			</trans-unit>
+			<trans-unit id="plugin.validation_no_users_found_error" xml:space="preserve">
+				<source>No user account was found with that e-mail address.</source>
+			</trans-unit>
+			<trans-unit id="plugin.validation_multiple_users_found_error" xml:space="preserve">
+				<source>More than one user account was found with that e-mail address. E-mail with login link was not sent.</source>
+			</trans-unit>
+			<trans-unit id="plugin.user_logged_in" xml:space="preserve">
+				<source>Currently %s is logged in.</source>
+			</trans-unit>
+			<trans-unit id="plugin.email_subject" xml:space="preserve">
+				<source>Login link from %s</source>
+			</trans-unit>
+			<trans-unit id="plugin.email_header" xml:space="preserve">
+				<source>Link to login at %s</source>
+			</trans-unit>
+			<trans-unit id="plugin.email_introduction" xml:space="preserve">
+				<source>A login link was requested for the e-mail address %s</source>
+			</trans-unit>
+			<trans-unit id="plugin.email_content" xml:space="preserve">
+				<source>Click at link below to login. If you didn't request such link, please delete this e-mail.</source>
+			</trans-unit>
+			<trans-unit id="plugin.mail_sent_header" xml:space="preserve">
+				<source>Login link sent</source>
+			</trans-unit>
+			<trans-unit id="plugin.mail_sent" xml:space="preserve">
+				<source>An e-mail was sent with a login link to the e-mail address that you submitted.</source>
+			</trans-unit>
+			<trans-unit id="plugin.mailer_sending_error" xml:space="preserve">
+				<source>Unfortunately something went wrong sending the e-mail. We apologize.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

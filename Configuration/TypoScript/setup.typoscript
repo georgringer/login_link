@@ -1,0 +1,7 @@
+plugin.tx_loginlink_magicloginlinkform {
+    persistence.storagePid =
+    variables {
+        pluginPid = TEXT
+        pluginPid.value =
+    }
+}
