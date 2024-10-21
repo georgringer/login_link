@@ -2,7 +2,6 @@
 
 $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['BE_fetchUserIfNoSession'] = true;
 $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_fetchUserIfNoSession'] = true;
-$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][1695727924] = 'EXT:login_link/Resources/Private/Templates/Email/';
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
     'login_link',
@@ -19,13 +18,4 @@ $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][1695727924] = 'EXT:logi
         'exec' => '',
         'className' => \GeorgRinger\LoginLink\Authentication\TokenAuthenticationService::class,
     ]
-);
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'LoginLink',
-    'MagicLoginLinkForm',
-    // all actions
-    [\GeorgRinger\LoginLink\Controller\PluginController::class => 'showForm,sendMail'],
-    [\GeorgRinger\LoginLink\Controller\PluginController::class => 'showForm,sendMail'],
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
