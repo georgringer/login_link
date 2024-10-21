@@ -24,7 +24,7 @@ class TokenRepository
                 $queryBuilder->expr()->eq('auth_type', $queryBuilder->createNamedParameter($authType)),
                 $queryBuilder->expr()->gte('valid_until', time(), \PDO::PARAM_INT)
             )
-            ->execute()
+            ->executeQuery()
             ->fetchAssociative();
         if (is_array($row)) {
             $userId = (int)$row['user_uid'];
@@ -55,7 +55,7 @@ class TokenRepository
             ->where(
                 $queryBuilder->expr()->lt('valid_until', time(), \PDO::PARAM_INT)
             )
-            ->execute();
+            ->executeQuery();
     }
 
     public function clearAll(): void
