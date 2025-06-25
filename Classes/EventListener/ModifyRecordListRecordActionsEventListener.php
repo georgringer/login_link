@@ -8,7 +8,9 @@ use TYPO3\CMS\Backend\RecordList\Event\ModifyRecordListRecordActionsEvent as Mod
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent;
 
 class ModifyRecordListRecordActionsEventListener
@@ -66,7 +68,11 @@ class ModifyRecordListRecordActionsEventListener
             'table' => $table,
             'id' => $recordId,
         ]);
-        $icon = $this->iconFactory->getIcon('txloginlink-loginlink', Icon::SIZE_SMALL);
+        if (VersionNumberUtility::convertVersionNumberToInteger(VersionNumberUtility::getCurrentTypo3Version()) >= 13000000) {
+            $icon = $this->iconFactory->getIcon('txloginlink-loginlink', IconSize::SMALL);
+        } else {
+            $icon = $this->iconFactory->getIcon('txloginlink-loginlink', Icon::SIZE_SMALL);
+        }
         $title = $lang->sL('LLL:EXT:login_link/Resources/Private/Language/locallang.xlf:trigger.title');
         $html = '<button class="btn btn-default t3js-modal-trigger"
         data-title="' . htmlspecialchars($title) . '"
