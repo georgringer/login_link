@@ -55,7 +55,7 @@ class TokenRepository
             ->where(
                 $queryBuilder->expr()->lt('valid_until', time(), \PDO::PARAM_INT)
             )
-            ->executeQuery();
+            ->executeStatement();
     }
 
     public function clearAll(): void
